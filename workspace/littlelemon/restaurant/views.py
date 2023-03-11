@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateAPIView, DestroyAPIView
-
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Booking, Menu
 from .serializers import BookingSerializer, MenuSerializer
@@ -42,6 +42,7 @@ from .serializers import BookingSerializer, MenuSerializer
 #             return Response({"status": "success", "data": serializer.data})
 
 class MenuItemView(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
 
@@ -52,5 +53,6 @@ class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
     serializer_class = MenuSerializer
 
 class BookingViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
